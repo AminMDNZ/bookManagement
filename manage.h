@@ -16,9 +16,9 @@ bool checkNumerical(string num){
 class manage{
 
 public:
-    Trie allBooks;
-    Trie allBooksRev;
-    cat CatsRoot;
+    Trie allBooks;  // Trie for storing all books
+    Trie allBooksRev;   // Trie for storing all books in reverse order
+    cat CatsRoot;      // Root of category nodes
     manage() : allBooks(), CatsRoot("all cats"), allBooksRev() {}
 
     void mainf(){
@@ -110,15 +110,17 @@ public:
 
 
 
-
+    // Function to check if a book with a given key exists
     bool checkBook(string key){
         return (allBooks.search(key) == nullptr || allBooks.search(key)->book == nullptr);
     }
     
+    // Function to check if a category with a given key exists    
     bool checkCat(string key){
         return allBooks.search(key)->book == nullptr;
     }
     
+    // Function to find a category with a given key using BFS
     cat* findCat(string key, cat* bfsRoot){
         Queue<cat*> bfsQ;
         cat* cur = bfsRoot;
@@ -134,20 +136,22 @@ public:
         return nullptr;
     }
 
+    // Function to add a category
     void addCat(string catName, cat* addRoot)   {
         cat* addedCat = new cat(catName);
         addRoot->cats.push(addedCat);
     }
 
+    // Function to reverse a string
     string reverseStr(string str)
     {
         int n = str.length();
         for (int i = 0; i < n / 2; i++)
             swap(str[i], str[n - i - 1]);
-
         return str;
     }
 
+    // Function to add a book
     void addBooks(string bookName, string writer, string catName, string price, cat* start) {
         cat* selecetedCat = findCat(catName, &CatsRoot);
         Book* book = new Book(bookName, writer, price, catName);
@@ -163,6 +167,7 @@ public:
         selecetedCat->books.sort();
     }
 
+    // Function to remove a book
     void removeBook(){
         string bookName;
         cout<<"eneter the books name : \n1.return"<<endl;
@@ -205,6 +210,7 @@ public:
         cout<<"removed."<<endl;
     }
 
+    // Function to find the parent category of a given category
     cat* findParentCat(const string& catName, cat* bfsRoot) {
         Queue<cat*> bfsQ;
         cat* cur = bfsRoot;
@@ -225,6 +231,7 @@ public:
         return nullptr;
     }
 
+    // Function to remove a category
     void removeCat(){
         string catName;
         cout << "Enter category name to remove: \n1. Return" << endl;
@@ -255,6 +262,7 @@ public:
         }
     }
 
+    // Function to print all books
     void printBooks(){
         string catName, in;
         cout<<"1.print all books\n2.print books of an specific category\nelse.return"<<endl;
@@ -333,6 +341,7 @@ public:
     //     printAbook(&CatsRoot);
     // }
     
+    // Function to print books based on Trie search
     void printByTrie() {
         cout << "Enter book's name:\n1.Return\n";
         string bookName;
@@ -365,7 +374,7 @@ public:
         printAbook(&CatsRoot);
     }   
 
-
+    // Function to print details of a specific book
     void printAbook(cat* searchRoot){
         string bookName;
         cout<<"eneter the books name : \n1.return"<<endl;

@@ -4,6 +4,7 @@
 #include "book.h"
 #include<bits/stdc++.h>
 
+// Comparator struct to define custom comparison for Book pointers
 struct cmp {
     bool operator()( Book* a,  Book* b) const {
         string s1 = a->getName();
@@ -18,15 +19,17 @@ struct cmp {
 
 class cat {
 public:
-    string name;
-    HVector<Book*, cmp> books;
-    HVector<cat*> cats;
+    string name;     // Name of the category
+    HVector<Book*, cmp> books;       // Vector to store books in the category sorted
+    HVector<cat*> cats;     // Vector to store subcategories
     cat(string name) : name(name), books(), cats() {}
 
+    // Function to insert a book into the category
     void insertBook(Book* book) {
         books.push(book);
     }
 
+    // Function to remove a subcategory by name
     void removeCat(string catName) {
         int index = -1;
         for (int i = 0; i < cats.getSize(); ++i) {
@@ -45,6 +48,7 @@ public:
         }
     }
 
+    // Function to insert a subcategory
     void insertCat(cat* Cat) {
         cats.push(Cat);
     }

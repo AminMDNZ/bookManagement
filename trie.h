@@ -5,6 +5,7 @@
 #include "book.h"
 using namespace std;
 
+// Node structure for Trie
 class TrieNode {
 public:
     char data;
@@ -16,11 +17,11 @@ public:
             return c1 < c2;
         }
     };
-    HVector<TrieNode*, cmp> children;
-    Book* book;  // Single book associated with the node
+    HVector<TrieNode*, cmp> children; // Children nodes of the current node
+    Book* book;  // book of node
 
     TrieNode(char ch) : data(ch), book(nullptr) {}
-
+    // Destructor
     ~TrieNode() {
         for (int i = 0; i < children.getSize(); ++i) {
             delete children.get(i);
@@ -35,14 +36,15 @@ private:
 
 public:
 TrieNode* root;
+    // Constructor
     Trie() {
         root = new TrieNode(NULL); 
     }
-
+    // Destructor
     ~Trie() {
         delete root;
     }
-
+    // Function to insert a book into the Trie
     void insert(Book* book) {
         TrieNode* current = root;
         string str = book->getName();
@@ -67,6 +69,7 @@ TrieNode* root;
         current->book = book;
     }
 
+    // Function to search for a node in the Trie given a key
     TrieNode* search(const string& key, TrieNode* curNode = nullptr) {
         TrieNode* current = (curNode == nullptr) ? root : curNode;
         for (char ch : key) {
@@ -101,7 +104,8 @@ TrieNode* root;
             }
         }
     }
-        
+
+    // Function to print books using Breadth-First Search   
     void printBookBfs(TrieNode* Node){
         TrieNode* cur = Node;
         Queue<TrieNode*> bfsQ;
@@ -117,6 +121,7 @@ TrieNode* root;
         }
     }
 
+    // Function to reverse a string
     string reverseStr(string str)
     {
         int n = str.length();
@@ -141,11 +146,13 @@ TrieNode* root;
         }
     }
 
+    // Function to select a book based on the key
     Book* select(const string& key) {
         if(search(key) == nullptr) return nullptr;
         return search(key)->book;
     }
 
+    // Function to remove a book from the Trie
     bool remove(string key){
         TrieNode* current = root;
         Stack<TrieNode*> path; 
